@@ -1,0 +1,28 @@
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+
+
+//顺序输出二叉树，用队列！！！
+public class Solution {
+    ArrayList<Integer> res = new ArrayList<Integer>();
+    public ArrayList<Integer> PrintFromTopToBottom(TreeNode root) {
+        //Queue<Integer> queue=new Queue<Integer>();
+        Queue<TreeNode> queue=new LinkedList<TreeNode>();
+        if(root==null){
+            return res;
+        }
+        queue.add(root);
+        while (!queue.isEmpty()){
+            TreeNode top=queue.peek();
+            res.add(top.val);
+            queue.poll();
+            if(top.left!=null) queue.add(top.left);
+            if(top.right!=null) queue.add(top.right);
+        }
+        return res;
+
+
+
+    }
+}
