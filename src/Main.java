@@ -15,6 +15,11 @@ public class Main {
         root=create_by_arr(arr);
         preOrderTraverse(root);
         PrintFromTopToBottom(root);
+        int target_num=22;
+        int []input={6,-3,-2,7,-15,1,2,2};
+        int k=3;
+        int[] res =  ss.InversePairs(input);
+        System.out.println(res.toString());
 
         //System.out.println(ss.VerifySquenceOfBST(seq));
     }
