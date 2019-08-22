@@ -1,5 +1,5 @@
 ///*
-//二维数组查找
+//二维数组查找 从左下角开始走，以坐标的思维找
 // */
 //public class Solution {
 //    public boolean Find(int target, int [][] array) {

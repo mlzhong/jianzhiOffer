@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -9,17 +10,19 @@ public class Main {
         Solution ss =new Solution();
         int target=5;
         //int [][]array={{1,2,8,9},{2,4,9,12},{4,7,10,13},{6,8,11,15}};
-        int []seq={5,4,3,2,1};
+        int []seq={1,2,3,4,8,9,9,9,9};
         int []arr={10,5,12,4,7};
+
+        char []chartree={'1','2','3','4','5','#','6','#','#','7'};
         TreeNode root=null;
-        root=create_by_arr(arr);
+        root=create_by_arr_char(chartree);
         preOrderTraverse(root);
         PrintFromTopToBottom(root);
         int target_num=22;
-        int []input={6,-3,-2,7,-15,1,2,2};
-        int k=3;
-        int[] res =  ss.InversePairs(input);
-        System.out.println(res.toString());
+        int []input={
+        };
+        ArrayList<Integer> res = ss.FindNumbersWithSum(seq, 11);
+        System.out.println(res);
 
         //System.out.println(ss.VerifySquenceOfBST(seq));
     }
@@ -33,10 +36,32 @@ public class Main {
         preOrderTraverse(node.right);
     }
 
+    public static TreeNode create_by_arr_char(char[] a) {
+        ArrayList<TreeNode> tree=new ArrayList<TreeNode>();
+        for(int i=0;i<a.length;i++){
+            if(a[i]!='#')
+                tree.add(new TreeNode(Integer.parseInt(String.valueOf(a[i]))));
+            else tree.add(null);
+
+        }
+        int n=a.length;
+        for(int i=0;i<=n/2-1;i++){
+            if(2*i+1<=n-1){ //节点i的左孩子2i+1,右孩子2i+2
+                tree.get(i).left=tree.get(2*i+1);
+            }
+            if(2*i+2<=n-1){
+                tree.get(i).right=tree.get(2*i+2);
+            }
+        }
+        return tree.get(0);
+
+    }
+
     public static TreeNode create_by_arr(int[] a) {
         ArrayList<TreeNode> tree=new ArrayList<TreeNode>();
         for(int i=0;i<a.length;i++){
             tree.add(new TreeNode(a[i]));
+
         }
         int n=a.length;
         for(int i=0;i<=n/2-1;i++){

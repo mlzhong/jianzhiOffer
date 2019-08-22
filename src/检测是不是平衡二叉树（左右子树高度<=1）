@@ -1,0 +1,35 @@
+public class Solution {
+    public boolean IsBalanced_Solution(TreeNode root) {
+        return lastOrdertraverse(root);
+
+    }
+    private boolean lastOrdertraverse(TreeNode node){
+        if(node==null) {
+            return true;
+        }
+        if(node.left==null && node.right==null){
+            node.val=1;
+            return true;//平衡
+        }else{
+            if(!lastOrdertraverse(node.left)) return false;
+            if(!lastOrdertraverse(node.right)) return false;
+            int left=0,right=0;
+            if(node.left!=null){
+                left=node.left.val;
+            }
+            if(node.right!=null){
+                right=node.right.val;
+            }
+            if(Math.abs(right-left)>1){
+                return false;//不平衡
+            }
+            int height=Math.max(left,right)+1;
+            node.val=height;
+            return true;
+
+        }
+
+
+
+    }
+}

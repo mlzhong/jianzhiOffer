@@ -1,0 +1,42 @@
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
+//PriorityQueue数据结构-优先队列
+//实际上是一个堆（不指定Comparator时默认为最小堆），通过传入自定义的Comparator函数可以实现大顶堆。
+
+
+//输入n个整数，找出其中最小的K个数。
+// 例如输入4,5,1,6,2,7,3,8这8个数字，则最小的4个数字是1,2,3,4,。
+//时间复杂度   nlogk
+
+public class Solution {
+    public ArrayList<Integer> GetLeastNumbers_Solution(int [] input, int k) {
+        if(input.length<k || k==0 || input.length==0){
+            return new ArrayList<>();
+        }
+
+
+        PriorityQueue<Integer> maxHeap=new PriorityQueue<>(k, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o2-o1;
+            }
+        });
+        int n=input.length;
+        for(int i=0;i<n;i++){
+            maxHeap.add(input[i]);
+            if(maxHeap.size()>k){
+                maxHeap.remove();
+            }
+        }
+        ArrayList<Integer> all=new ArrayList<>(maxHeap);
+        all.sort(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o1-o2;
+            }
+        });
+        return all;
+    }
+}

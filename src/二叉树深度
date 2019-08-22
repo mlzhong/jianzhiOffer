@@ -1,0 +1,42 @@
+/**
+ public class TreeNode {
+ int val = 0;
+ TreeNode left = null;
+ TreeNode right = null;
+
+ public TreeNode(int val) {
+ this.val = val;
+
+ }
+
+ }
+ */
+public class Solution {
+    int maxdep=-1;
+    int dep=0;
+    public int TreeDepth(TreeNode root) {
+        TreeNode p=root;
+        if(root==null) return 0;
+        preOrdertravers(root);
+        return maxdep;
+
+
+
+    }
+    private void preOrdertravers(TreeNode node){
+        if(node==null) return;
+        dep++;
+        if(node.left==null && node.right==null){
+            if(dep>maxdep){
+                maxdep=dep;
+            }
+        }
+        if(node.left!=null){
+            preOrdertravers(node.left);
+        }
+        if(node.right!=null) preOrdertravers(node.right);
+
+        dep--;
+
+    }
+}
