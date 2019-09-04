@@ -11,7 +11,7 @@ public class Main {
         int target=5;
         //int [][]array={{1,2,8,9},{2,4,9,12},{4,7,10,13},{6,8,11,15}};
         int []seq={1,2,3,4,8,9,9,9,9};
-        int []arr={10,5,12,4,7};
+        int []arr={1,3,0,7,0};
 
         char []chartree={'1','2','3','4','5','#','6','#','#','7'};
         TreeNode root=null;
@@ -21,8 +21,8 @@ public class Main {
         int target_num=22;
         int []input={
         };
-        ArrayList<Integer> res = ss.FindNumbersWithSum(seq, 11);
-        System.out.println(res);
+        //boolean res = ss.isContinuous(arr);
+        //System.out.println(res);
 
         //System.out.println(ss.VerifySquenceOfBST(seq));
     }

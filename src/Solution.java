@@ -1,36 +1,62 @@
-import java.util.ArrayList;
-public class Solution {
-    public ArrayList<Integer> FindNumbersWithSum(int [] array,int sum) {
-        ArrayList<Integer> res = new ArrayList<Integer>();
-        int p1=0;
-        int p2=array.length-1;
-        ArrayList<Integer> a1list=new ArrayList<Integer>();
-        ArrayList<Integer> a2list=new ArrayList<Integer>();
-        while (p1<p2){
-            if(array[p1]+array[p2]==sum){
-                a1list.add(array[p1]);
-                a2list.add(array[p2]);
-                p1++;
-            }else if(array[p1]+array[p2]<sum){
-                p1++;
-            }else p2--;
-        }
-        int min=Integer.MAX_VALUE;
-        int res1=0;
-        int res2=0;
-        int flag=0;
-        for(int i = 0; i<a1list.size(); i++){
-            if(a1list.get(i)*a2list.get(i)<min){
-                min=a1list.get(i)*a2list.get(i);
-                res1=a1list.get(i);
-                res2=a2list.get(i);
-                flag=1;
-            }
-        }
-        if(flag==0) return res;
-        res.add(res1);
-        res.add(res2);
+import java.util.*;
+
+class Solution {
+    int[] time_h={1,2,4,8,1,2,4,8,16,32};
+    List<String> res=new ArrayList<String>();
+    HashSet<Integer> set=new HashSet<Integer>();
+    HashSet<String> res_set=new HashSet<String>();
+    public static void main(String[] args){
+        Solution ss=new Solution();
+        System.out.println(ss.readBinaryWatch(7));
+    }
+
+    public List<String> readBinaryWatch(int num) {
+        //int[] hour={1,2,4,8};
+//        for(int i=0;i<12;i++){
+//            for(int j=0;j<60;j++){
+//                if(Integer.bitCount(i)+Integer.bitCount(j)==num){
+//                    res.add(String.format("%d.%02d",i,j));
+//                }
+//            }
+//        }
+
+        DFS(0,0,0,num);
+        res.addAll(res_set);
         return res;
 
+    }
+    private void DFS(int lighted,int hour,int min,int num){
+        if(lighted==num){
+            //递归出口
+            if(legalTime(hour,min)){
+                //res.add(String.format("%d:%02d",hour,min));
+                res_set.add(String.format("%d:%02d",hour,min));
+            }
+            return;
+        }
+        for(int i=0;i<time_h.length;i++){
+            if(i < 4){
+                if(!set.contains(i)){
+                    set.add(i);
+                    DFS(lighted + 1, hour + time_h[i], min,num);
+                    //DFS结束，返回上一层要还原状态
+                    set.remove(i);
+                }
+            }else{
+                if(!set.contains(i)){
+                    set.add(i);
+                    DFS(lighted + 1, hour, min+time_h[i], num);
+                    set.remove(i);
+                }
+            }
+
+
+        }
+    }
+    private boolean legalTime(int hour,int min){
+        if(hour<12 && min<60){
+            return true;
+        }
+        return false;
     }
 }
