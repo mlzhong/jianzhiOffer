@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
 
         System.out.println("Hello World!");
-        Solution ss =new Solution();
+        //Solution ss =new Solution();
         int target=5;
         //int [][]array={{1,2,8,9},{2,4,9,12},{4,7,10,13},{6,8,11,15}};
         int []seq={1,2,3,4,8,9,9,9,9};

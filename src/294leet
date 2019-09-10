@@ -1,0 +1,47 @@
+class Solution {
+    //https://leetcode.com/problems/word-search/
+    int flag=-1;//未填
+    public static void main(String[]args){
+        char[][] board={{'A','B','C','E'},{'S','F','C','S'},{'A','D','E','E'}};
+        String word="ABCB";
+        Solution ss=new Solution();
+        System.out.println(ss.exist(board,word));
+
+    }
+    public boolean exist(char[][] board, String word) {
+        int m=board.length;
+        int n=board[0].length;
+        int i_index=m-1; //i--
+        int j_index=0;  //j++
+        return d2_dfs(board,word,i_index,j_index,0);
+    }
+    private boolean d2_dfs(char[][] board,String word,int i,int j,int word_index){
+        if(word_index==word.length()){
+            flag=1;
+            return true;
+        }
+        if(i<0 || j>=board[0].length){
+            return false;
+        }
+        if(flag==-1){
+            if(word_index==0){
+                if(board[i][j]==word.charAt(word_index)){
+                    d2_dfs(board,word,i-1,j,word_index+1);
+                    d2_dfs(board,word,i,j+1,word_index+1);
+                }{
+                    d2_dfs(board,word,i-1,j,word_index);
+                    d2_dfs(board,word,i,j+1,word_index);
+                }
+            }else{
+                if(board[i][j]==word.charAt(word_index)){
+                    d2_dfs(board,word,i-1,j,word_index+1);
+                    d2_dfs(board,word,i,j+1,word_index+1);
+                }
+                return false;
+            }
+
+        }
+        return true;
+
+    }
+}

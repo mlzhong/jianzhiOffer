@@ -1,0 +1,45 @@
+import java.util.*;
+
+class Solution {
+    List<List<Integer>> res=new ArrayList<>();
+    Stack<Integer> stack=new Stack<Integer>();
+    HashSet<Integer> set=new HashSet<Integer>();
+    public static void main(String[]args){
+        Solution ss=new Solution();
+        int []nums={1,2,3};
+        System.out.println(ss.subsets(nums));
+
+    }
+    public List<List<Integer>> subsets(int[] nums) {
+        Arrays.sort(nums);
+        for(int i=0;i<=nums.length;i++){
+            dfs(i,nums,0);
+        }
+
+        return res;
+
+
+    }
+    private void dfs(int expect_n,int[] nums,int index){  //处理一个节点需要表达棋盘状态的参数
+        if(index==expect_n){
+            res.add(new ArrayList<>(stack));
+            return;
+        }
+        for(int i=0;i<nums.length;i++){
+            if(!set.contains(i)){
+                if(!stack.empty() && nums[i]<=stack.peek()){
+                    continue;
+                }
+                set.add(i);
+                stack.add(nums[i]);
+
+                dfs(expect_n,nums,index+1);
+
+                set.remove(i);
+                stack.pop(); //pop
+
+            }
+        }
+    }
+
+}

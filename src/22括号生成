@@ -1,0 +1,31 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class Solution {
+    ArrayList<String> res=new ArrayList<String>();
+    public static void main(String[]args){
+        Solution ss=new Solution();
+        System.out.println(ss.generateParenthesis(3));
+
+    }
+    public List<String> generateParenthesis(int n) {
+        String str=new String();
+        dfs(n,0,0,0,str);
+        return res;
+    }
+    private void dfs(int n,int left,int right,int index,String str){
+        if(index==2*n){
+            res.add(str);
+            return;
+        }
+        if(left<n){
+            dfs(n,left+1,right,index+1,str+"(");
+        }
+        if(right<n && right<left){
+            dfs(n,left,right+1,index+1,str+")");
+        }
+
+
+    }
+
+}

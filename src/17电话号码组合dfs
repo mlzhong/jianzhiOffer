@@ -1,0 +1,39 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.zip.Adler32;
+
+class Solution {
+    ArrayList<String> res=new ArrayList<String>();
+    public static void main(String[]args){
+        Solution ss=new Solution();
+        System.out.println(ss.letterCombinations("23"));
+
+
+    }
+    public List<String> letterCombinations(String digits) {
+        if("".equals(digits) || digits==null){
+            return res;
+        }
+        String[] letter={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+        char[] dig=digits.toCharArray();
+        char[] str=new char[digits.length()];
+        dfs(dig,letter,0,str);
+        return res;
+    }
+    private void dfs(char[] dig,String[] letter, int index, char[] str){
+        if(index==dig.length){
+            res.add(String.valueOf(str));
+            return;
+        }
+        int letter_index=Integer.valueOf(String.valueOf(dig[index]));
+        String allchar=letter[letter_index];
+        for(int i=0;i<allchar.length();i++){
+            char ch= allchar.charAt(i);
+            str[index]=ch;
+            dfs(dig,letter,index+1,str);
+        }
+    }
+
+
+
+}
