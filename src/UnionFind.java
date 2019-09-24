@@ -1,0 +1,97 @@
+//利用union 并查集： 特点是孩子结点指向父亲结点，两个结点连接在一起即它们有相同的根结点
+/*
+并查集的特点是孩子结点指向父亲结点，两个结点连接在一起即它们有相同的根结点
+每个集合的代表元素一般是这棵树的根节点
+并查集处理不相交集合
+ */
+
+/*
+并查集的特点是孩子结点指向父亲结点，两个结点连接在一起即它们有相同的根结点。下面是对编码的两点说明：
+
+1、这里使用了基于 rank 的结点指向策略，rank 的含义是以自己为根结点的树的高度。
+
+2、在 find 的过程中，实现了路径压缩算法，简而言之就在查询的过程中，
+修改结点的指向，将原本指向父亲结点修改成指向爷爷结点，以压缩这个多叉树的高度。
+
+用于处理一些!!!不相交集合!!!的合并及查询问题
+
+链接：https://leetcode-cn.com/problems/friend-circles/solution/bing-cha-ji-python-dai-ma-java-dai-ma-by-liweiwei1/
+ */
+/*
+并查集是一种树形结构，又叫“不相交集合”，保持了一组不相交的动态集合，
+每个集合通过一个代表来识别，代表即集合中的某个成员，通常选择根做这个代表。
+
+三种主要操作：
+
+Make_Set(x):
+
+建立一个新的集合，其唯一成员就是x，因此这个集合的代表也是x，
+并查集要求各集合是不相交的，因此要求x没有在其他集合中出现过。
+
+Find_Set(x):
+
+返回能代表x所在集合的节点，通常返回x所在集合的根节点。
+
+Union(x, y):
+
+将包含x,y的动态集合合并为一个新的集合。合并两个集合的关键是找到两个集合的根节点，如果两个根节点相同则不用合并；如果不同，则需要合并。
+
+ */
+public class UnionFind {
+    /**
+     * 连通分量的个数
+     */
+    private int count;
+    private int[] parent;
+    /**
+     * 以索引为 i 的元素为根结点的树的深度（最深的那个深度）
+     */
+    private int[] rank;
+
+    public UnionFind(int n) {
+        this.count = n;
+        this.parent = new int[n];
+        this.rank = new int[n];
+        for (int i = 0; i < n; i++) {
+            this.parent[i] = i;
+            // 初始化时，所有的元素只包含它自己，只有一个元素，所以 rank[i] = 1
+            this.rank[i] = 1;
+        }
+    }
+
+    public int getCount() {
+        return this.count;
+    }
+
+    public int find(int p) { //向上查找根节点，直接指向根节点。
+        // 在 find 的时候执行路径压缩
+        while (p != this.parent[p]) {  //只有根节点才 p==parent[p]
+            this.parent[p] = this.parent[this.parent[p]];
+            p = this.parent[p];
+        }
+        return p;
+    }
+
+    public boolean isConnected(int p, int q) {
+        return find(p) == find(q);
+    }
+
+    public void union(int p, int q) {
+        int pRoot = find(p);
+        int qRoot = find(q);
+        if (pRoot == qRoot) {
+            return;
+        }
+        //把树高度矮的集合 挂到树高度更深的集合下面，修改根节点的高度rank值
+        if (rank[pRoot] > rank[qRoot]) {
+            parent[qRoot] = pRoot;
+        } else if (rank[pRoot] < rank[qRoot]) {
+            parent[pRoot] = qRoot;
+        } else {
+            parent[qRoot] = pRoot;
+            rank[pRoot]++;
+        }
+        // 每次 union 以后，连通分量减 1
+        count--;
+    }
+}

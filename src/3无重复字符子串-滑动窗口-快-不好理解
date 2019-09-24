@@ -1,0 +1,33 @@
+import java.util.*;
+
+class Solution {
+    HashMap<Character,Integer> window=new HashMap<>();
+    public static void main(String[]args){
+        Solution ss=new Solution();
+        int []nums={1,2,3};
+        System.out.println(ss.lengthOfLongestSubstring("pwpwe"));
+
+    }
+    public int lengthOfLongestSubstring(String s) {
+        int max=0;
+        int start=0; //滑动窗口左界
+        int end=0; //滑动窗口右界
+        int length=0; //当前窗口长度
+        int[] temp=new int[256]; //index表示ASCII码， temp[index]表示是否在窗口里
+        while (start<s.length()){
+            if(end<s.length() && temp[s.charAt(end)]==0){
+                temp[s.charAt(end)]=1;
+                end++;
+            }else {
+                length=end-start;
+                if (max<length) max=length;
+                //更新start为重复元素的下一个index
+                temp[s.charAt(start)]=0;//
+                start++;
+            }
+        }
+        return max;
+
+    }
+
+}

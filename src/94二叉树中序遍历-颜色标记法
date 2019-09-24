@@ -1,0 +1,55 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Stack;
+
+
+
+class Solution {
+    public static void main(String[]args){
+        Solution ss=new Solution();
+        int []nums={1,2,3};
+        //System.out.println(ss.inorderTraversal());
+
+    }
+
+    public List<Integer> inorderTraversal(TreeNode root) {
+        //white 0 , grey 1  //一开始默认初始化所有节点都是white，即val=0
+        List<Integer> res=new ArrayList<>();
+        Stack<TreeNode> stack=new Stack<>();
+        HashMap<TreeNode, Integer> map=new HashMap<>();
+        if(root==null) return res;
+
+        map.put(root,root.val);
+        root.val=0;
+        stack.add(root);// stack中的val表示颜色 0 white
+        while (!stack.empty()){
+            TreeNode top=stack.pop();
+            if(top==null){
+                continue;
+            }
+            if(top.val==0){
+                //中序遍历左根右， 进站顺序就是反过来：右根左
+                if(top.right!=null){
+                    map.put(top.right,top.right.val);
+                    top.right.val=0;
+                    stack.add(top.right);
+                }
+                top.val=1;
+                stack.add(top);//已经出栈过一次的节点再次进站的时候变为灰色，表示遍历过
+                if(top.left!=null){
+                    map.put(top.left,top.left.val);
+                    top.left.val=0;
+                    stack.add(top.left);
+                }
+            }else{
+                //节点为灰色， 输出
+                res.add(map.get(top));
+            }
+        }
+        return res;
+
+    }
+
+
+}

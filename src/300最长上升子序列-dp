@@ -1,0 +1,41 @@
+import sun.misc.FpUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+class Solution {
+    public static void main(String[]args){
+        Solution ss=new Solution();
+        int []nums={10,9,2,5,3,7,101,18};
+        System.out.println(ss.lengthOfLIS(nums));
+
+    }
+
+    public int lengthOfLIS(int[] nums) {
+        //【关键】将 dp 数组定义为：以 nums[i] 结尾的最长上升子序列的长度
+        if(nums.length==0){
+            return 0;
+        }
+        int []dp=new int[nums.length];
+        //// 如果只有 1 个元素，那么这个元素自己就构成了最长上升子序列
+        //dp数组初始化1
+        Arrays.fill(dp,1);
+        //从第2个元素，开始计算dp
+        for(int i=1;i<nums.length;i++){
+            for(int j=0;j<i;j++){
+                if(nums[j]<nums[i]){
+                    dp[i]=Math.max(dp[i],dp[j]+1);
+                }
+            }
+        }
+        int res=dp[0];
+        for (int i=1;i<nums.length;i++){
+            res=Math.max(res,dp[i]);
+        }
+        return res;
+
+    }
+
+
+}

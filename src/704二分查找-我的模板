@@ -1,0 +1,32 @@
+public class Solution {
+    // 左中位数 [0,mid][mid+1,len-1] int mid = left + (right - left) / 2;
+    // 右中位数 [0,mid-1] [mid,len-1] int mid = left + (right - left +1 ) / 2;
+
+    public int search(int[] nums, int target) {
+        if(target<nums[0] || target>nums[nums.length-1]){
+            return -1;
+        }
+        //下面确定搜索范围是[0，len-1]  //最后夹逼剩下的nums[left]要单独判断
+        int left=0;
+        int right=nums.length-1;
+        while (left<right){
+            int mid=left+(right-left+1)/2;  //根据下面的排除情况才来决定是否+1
+            if(nums[mid]>target){  // 排除掉中位数的情况，收缩区间
+                right=mid-1;
+            }else{
+                left=mid; //保留中位数，不收缩区间
+            }
+        }
+        if(nums[left]==target){
+            return left;
+        }
+        return -1;
+    }
+
+    public static void main(String[]args){
+        Solution ss=new Solution();
+        int []nums={-1,0,3,5,9,12};
+        System.out.println(ss.search(nums,2));
+
+    }
+}

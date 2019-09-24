@@ -1,0 +1,89 @@
+import java.util.ArrayList;
+import java.util.List;
+
+//状态定义，用几维数组
+//状态转移方程：如果0到i-1都成立，那么第i个值怎么计算
+//base case初始化
+
+//每一天有几种状态
+//每一个状态有几种选择
+/*
+for 状态1 in 状态1的所有取值：
+    for 状态2 in 状态2的所有取值：
+        for ...
+            dp[状态1][状态2][...] = 择优(选择1，选择2...)
+
+股票问题每天有3个选择： 买入buy、卖出sell、无操作rest
+每一天结束后的描述状态要有3个参数：
+1、第i天  2、交易最多k次  3、当前是否持有股票（1是有股票，2是没股票）（有就卖出，没有就买入）
+所以 dp[i][k][0 or 1]
+0<= i <= n-1
+1<= k <= K
+for 0 <= i < n:
+    for 1 <= k <= K:
+        for s in {0, 1}:
+            dp[i][k][s] = max(buy, sell, rest)
+比如 dp[2][3][0] 的含义：今天是第二天，我现在手上没有持有股票，至今最多进行 33 次交易。
+最终想要求得的是dp[n-1]
+ */
+
+/*
+dp[i][k][0] = max(dp[i-1][k][0], dp[i-1][k][1]+ price[i])
+              max(   选择 rest  ,           选择 sell      )
+
+dp[i][k][1] = max(dp[i-1][k][1], dp[i-1][k-1][0] - price[i])
+              max(   选择 rest  ,           选择 buy (k-1次交易的dp)       )
+
+
+ */
+/*
+初始化
+dp[-1][k][0] = 0
+解释：因为 i 是从 0 开始的，所以 i = -1 意味着还没有开始，这时候的利润当然是 0 。
+dp[-1][k][1] = -infinity
+解释：还没开始的时候，是不可能持有股票的，用负无穷表示这种不可能。
+dp[i][0][0] = 0
+解释：因为 k 是从 1 开始的，所以 k = 0 意味着根本不允许交易，这时候利润当然是 0 。
+dp[i][0][1] = -infinity
+解释：不允许交易的情况下，是不可能持有股票的，用负无穷表示这种不可能。
+
+*/
+class Solution {
+    public static void main(String[]args){
+        Solution ss=new Solution();
+        int []nums={3,3,5,0,0,3,1,4};
+        System.out.println(ss.maxProfit(nums));
+
+    }
+
+    public int maxProfit(int[] prices) {
+        if(prices.length==0){
+            return 0;
+        }
+
+        int max_k=2;
+        int n=prices.length;
+        int [][][]dp=new int[n][max_k+1][2];
+        dp[0][0][0]=0;
+        //dp[0][1][1]=-prices[0];// 第1天结束后，买了股票
+        //dp[0][0][1]=//不可能
+        for(int i=0;i<n;i++){
+            for(int k=1;k<=max_k;k++){
+                if(i==0){ //base case 初始化 第1天结束后，要么无操作dp=0,要么买入股票dp=-price[0]
+                    dp[i][k][0] = 0;
+                    dp[i][k][1] = -prices[i];
+                    continue;
+
+                }
+                dp[i][k][0]=Math.max(dp[i-1][k][0], dp[i-1][k][1]+prices[i]); //i>=1
+                //if(k>=1)
+                   dp[i][k][1]=Math.max(dp[i-1][k][1], dp[i-1][k-1][0]-prices[i]);
+
+            }
+        }
+        return dp[n-1][max_k][0];
+
+    }
+
+
+}

@@ -13,14 +13,19 @@ public class Main {
         int []seq={1,2,3,4,8,9,9,9,9};
         int []arr={1,3,0,7,0};
 
-        char []chartree={'1','2','3','4','5','#','6','#','#','7'};
+        //char []chartree={'1','2','3','4','5','#','6','#','#','7'};
+        String []chartree={"-10","9","20","#","#","15","7"};
+
         TreeNode root=null;
-        root=create_by_arr_char(chartree);
+        //root=create_by_arr_char(chartree);
+        root=TreeNode.create_tree(chartree);
         preOrderTraverse(root);
         PrintFromTopToBottom(root);
-        int target_num=22;
-        int []input={
-        };
+        System.out.println("//////////");
+        Solution ss=new Solution();
+        System.out.println(ss.maxPathSum(root));
+
+
         //boolean res = ss.isContinuous(arr);
         //System.out.println(res);
 

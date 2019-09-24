@@ -1,0 +1,37 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Stack;
+
+class Solution {
+    public static void main(String[]args){
+        Solution ss=new Solution();
+        int []nums={1,2,3};
+        //String []chartree={"-10","9","20","#","#","15","7"};
+        String []chartree={"5","4","8","11","#","13","4","7","2","#","#","#","1"};
+
+        TreeNode root=null;
+        //root=create_by_arr_char(chartree);
+        root=TreeNode.create_tree_new(chartree);
+        TreeNode.preOrderTraverse(root);
+        TreeNode.PrintFromTopToBottom(root);
+        System.out.println("//////////");
+        System.out.println(ss.maxPathSum(root));
+
+
+        Stack<TreeNode> stack=new Stack<>();
+        stack.add(null);
+        stack.add(null);
+        stack.add(new TreeNode(2));
+        TreeNode top=stack.pop();
+        TreeNode top2=stack.pop();
+
+        stack.add(new TreeNode(22));
+
+
+
+    }
+
+
+
+}

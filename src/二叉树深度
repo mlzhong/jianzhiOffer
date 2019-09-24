@@ -11,7 +11,7 @@
 
  }
  */
-public class Solution {
+public class 二叉树深度 {
     int maxdep=-1;
     int dep=0;
     public int TreeDepth(TreeNode root) {
